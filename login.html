@@ -1,0 +1,14 @@
+
+<!DOCTYPE html><html><head><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><h2>Login</h2></header>
+<div class="card">
+<select id="role">
+<option>User</option><option>Admin</option><option>Manager</option>
+<option>Co-Founder</option><option>Founder</option><option>Co-Owner</option><option>Owner</option>
+</select>
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login(role.value,pass.value)">Login</button>
+</div>
+<script src="auth.js"></script>
+</body></html>
