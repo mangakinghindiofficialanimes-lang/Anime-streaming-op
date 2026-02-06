@@ -1,6 +1,63 @@
+// Role power levels (higher = more power)
+const ROLE_LEVELS = {
+  "User": 0,
+  "Admin": 1,
+  "Manager": 2,
+  "Co-Founder": 3,
+  "Founder": 4,
+  "Co-Owner": 5,
+  "Owner": 6
+};
 
-const ROLE_LEVELS={Owner:6,"Co-Owner":5,Founder:4,"Co-Founder":3,Manager:2,Admin:1,User:0};
-const PASSWORDS={Owner:"owner123","Co-Owner":"coowner123",Founder:"founder123","Co-Founder":"cofounder123",Manager:"manager123",Admin:"admin123",User:"user123"};
-function login(r,p){if(PASSWORDS[r]===p){localStorage.setItem("role",r);location.href=r==="User"?"index.html":r.toLowerCase().replace(" ","-")+".html";}else alert("Wrong password");}
-function protectPage(min){let r=localStorage.getItem("role");if(!r||ROLE_LEVELS[r]<ROLE_LEVELS[min])location.href="login.html";}
-function logout(){localStorage.removeItem("role");location.href="login.html";}
+// Passwords (users don't need password)
+const PASSWORDS = {
+  "Admin": "admin123",
+  "Manager": "manager123",
+  "Co-Founder": "cofounder123",
+  "Founder": "founder123",
+  "Co-Owner": "coowner123",
+  "Owner": "owner123"
+};
+
+// Redirect pages
+const DASHBOARD = {
+  "User": "index.html",
+  "Admin": "admin.html",
+  "Manager": "manager.html",
+  "Co-Founder": "co-founder.html",
+  "Founder": "founder.html",
+  "Co-Owner": "co-owner.html",
+  "Owner": "owner.html"
+};
+
+// Login function
+function login(role, password) {
+  if (role === "User") {
+    localStorage.setItem("role", "User");
+    window.location.href = DASHBOARD.User;
+    return;
+  }
+
+  if (PASSWORDS[role] && PASSWORDS[role] === password) {
+    localStorage.setItem("role", role);
+    window.location.href = DASHBOARD[role];
+  } else {
+    alert("❌ Wrong password");
+  }
+}
+
+// Protect pages
+function protectPage(minRole) {
+  const role = localStorage.getItem("role");
+
+  if (!role || ROLE_LEVELS[role] < ROLE_LEVELS[minRole]) {
+    alert("❌ Access denied");
+    window.location.href = "login.html";
+  }
+}
+
+// Logout
+function logout() {
+  localStorage.removeItem("role");
+  window.location.href = "login.html";
+}
